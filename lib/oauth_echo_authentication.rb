@@ -12,12 +12,12 @@ module OauthEchoAuthentication
     module ClassMethods
       def oauth_echo_authenticate_with(specified_provider, options = {})
         before_filter(options) do
-          oauth_echo_authenticate_with(specified_provider)
+          _oauth_echo_authenticate_with(specified_provider)
         end
       end
     end
 
-    def oauth_echo_authenticate_with(specified_provider)
+    def _oauth_echo_authenticate_with(specified_provider)
       provider = request.env['X-Auth-Service-Provider']
       raise AuthError.new('Unauthorized', 401) unless provider
       unless provider == WELLKNOWN_PROVIDERS[specified_provider]
@@ -25,7 +25,7 @@ module OauthEchoAuthentication
       end
       @current_user = authenticate_with_oauth_echo!
     rescue OpenURI::HTTPError => e
-      render json: JSON.parse(e.io.read), status: e.io.status[0].to_i
+      render :json => JSON.parse(e.io.read), :status => e.io.status[0].to_i
     rescue AuthError => e
       head e.status
     end
