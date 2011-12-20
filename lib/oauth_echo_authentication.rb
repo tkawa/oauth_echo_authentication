@@ -18,8 +18,8 @@ module OauthEchoAuthentication
     end
 
     def _oauth_echo_authenticate_with(specified_provider)
-      provider = request.env['X-Auth-Service-Provider']
-      raise AuthError.new('Unauthorized', 401) unless provider
+      provider = request.headers['X-Auth-Service-Provider']
+      raise AuthError.new('Unauthorized: provider not found', 401) unless provider
       unless provider == WELLKNOWN_PROVIDERS[specified_provider]
         raise AuthError.new('Forbidden: unsupported provider', 403)
       end
@@ -27,7 +27,7 @@ module OauthEchoAuthentication
     rescue OpenURI::HTTPError => e
       render :json => JSON.parse(e.io.read), :status => e.io.status[0].to_i
     rescue AuthError => e
-      head e.status
+      render :json => { :error => e.to_s }, :status => e.status
     end
 
     def authenticate_with_oauth_echo!

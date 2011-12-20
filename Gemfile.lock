@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     oauth_echo_authentication (0.0.1)
+      json
       rails
 
 GEM

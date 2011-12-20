@@ -10,12 +10,13 @@ Gem::Specification.new do |s|
   s.authors     = ["Toru KAWAMURA"]
   s.email       = ["tkawa@4bit.net"]
   s.homepage    = ""
-  s.summary     = "TODO: Summary of OauthEchoAuthentication."
-  s.description = "TODO: Description of OauthEchoAuthentication."
+  s.summary     = "OAuth Echo authentication filter for Rails"
+  s.description = "OAuth Echo authentication filter for Rails"
 
   s.files = Dir["{lib,spec}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
 
   s.add_dependency "rails"
+  s.add_dependency "json"
 
   #s.add_development_dependency "sqlite3"
 end
